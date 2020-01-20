@@ -21,7 +21,7 @@ services:
 
   bitcoind:
     build: bitcoind
-    container_name: bitcoind
+    container_name: bitcoind-bsv
     command: ./startup.sh
     ports:
       - "18333:8333"
