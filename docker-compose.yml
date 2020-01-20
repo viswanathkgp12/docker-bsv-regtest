@@ -1,0 +1,39 @@
+version: "3"
+services: 
+  mongodb:
+    image: mongo
+    container_name: mongo-bitcore
+    ports:
+      - "3503:27017"
+    volumes:
+      - ./bitcore/mongo_data:/data/db
+    command: mongod --logpath=/dev/null
+    restart: always
+
+  woc:
+    build: whatsonchain
+    container_name: whatsonchain
+    restart: always
+    depends_on:
+      - bitcoind
+      - mongodb
+    network_mode: service:bitcoind 
+
+  bitcoind:
+    build: bitcoind
+    container_name: bitcoind
+    command: ./startup.sh
+    ports:
+      - "18333:8333"
+      - "18332:8332"
+      - "28332:28332"
+      - "8200:8200"
+      - "3002:3002"
+    volumes:
+      - ./bitcoind/data:/data
+      - ./bitcoind/bitcoin.conf:/data/bitcoin.conf
+    networks: 
+      - bitcoin
+
+networks: 
+  bitcoin:
