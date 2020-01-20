@@ -2,11 +2,11 @@ version: "3"
 services: 
   mongodb:
     image: mongo
-    container_name: mongo-bitcore
+    container_name: mongo-whatsonchain
     ports:
       - "3503:27017"
     volumes:
-      - ./bitcore/mongo_data:/data/db
+      - ./whatsonchain/mongo_data:/data/db
     command: mongod --logpath=/dev/null
     restart: always
 
